@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="MyCompany\HelloBundle\Entity\ProductRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Product
 {
@@ -35,6 +36,13 @@ class Product
      */
     private $name;
 
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="MyCompany\HelloBundle\Entity\Category", inversedBy="products")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category;
 
     /**
      * Get id
@@ -90,5 +98,27 @@ class Product
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set Category
+     *
+     * @param mixed $category category
+     *
+     * @return mixed
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * Get Category
+     *
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }
